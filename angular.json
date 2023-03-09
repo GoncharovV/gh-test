@@ -23,7 +23,7 @@
                         "polyfills": "zone.js",
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
-                        "baseHref": "/gh-test",
+                        "baseHref": "https://goncharovv.github.io/gh-test/",
                         "assets": [
                             "src/favicon.ico",
                             "src/assets"
