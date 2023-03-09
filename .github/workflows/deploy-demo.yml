@@ -45,7 +45,13 @@ jobs:
               uses: actions/upload-pages-artifact@v1
               with:
                   path: './dist/form-url-save-front'
+                  name: build-files
 
             - name: Deploy to GitHub Pages
               id: deployment
               uses: actions/deploy-pages@v1
+
+            - name: Get build project
+              uses: actions/download-artifact@v3
+              with:
+                  name: build-files
