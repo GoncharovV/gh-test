@@ -7,6 +7,11 @@ permissions:
     pages: write
     id-token: write
 
+# Allow one concurrent deployment
+concurrency:
+    group: "pages"
+    cancel-in-progress: true
+
 jobs:
     deploy:
         runs-on: ubuntu-latest
@@ -27,6 +32,17 @@ jobs:
             - name: Install Dependencies
               run: npm install
 
-            - name: Deploy
-              run: |
-                  npm run deploy
+            - name: Build
+              run: npm run build
+
+            - name: Setup Pages
+              uses: actions/configure-pages@v3
+
+            - name: Upload artifact
+              uses: actions/upload-pages-artifact@v1
+              with:
+                  path: './dist/form-url-save-front'
+
+            - name: Deploy to GitHub Pages
+              id: deployment
+              uses: actions/deploy-pages@v1
