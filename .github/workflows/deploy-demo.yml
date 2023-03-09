@@ -26,14 +26,22 @@ jobs:
               with:
                   node-version: 18
 
-            - name: Cache deps
+            - name: Cache node modules
+              id: cache-nodemodules
               uses: actions/cache@v3
+              env:
+                  cache-name: cache-node-modules
               with:
-                  path: ~/.npm
-                  key: node-modules-${{ hashFiles('**/package.json') }}
-
+                  # caching node_modules
+                  path: node_modules
+                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-build-${{ env.cache-name }}-
+                      ${{ runner.os }}-build-
+                      ${{ runner.os }}-
             - name: Install Dependencies
-              run: npm install
+              if: steps.cache-nodemodules.outputs.cache-hit != 'true'
+              run: npm ci
 
             - name: Build
               run: npm run build
@@ -45,7 +53,6 @@ jobs:
               uses: actions/upload-pages-artifact@v1
               with:
                   path: './dist/form-url-save-front'
-                  name: build-files
 
             - name: Deploy to GitHub Pages
               id: deployment
@@ -53,5 +60,3 @@ jobs:
 
             - name: Get build project
               uses: actions/download-artifact@v3
-              with:
-                  name: build-files
