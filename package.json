@@ -4,7 +4,7 @@
     "scripts": {
         "ng": "ng",
         "start": "ng serve -o",
-        "build": "ng build",
+        "build": "ng build --prod",
         "deploy": "ng deploy --base-href=/gh-test/ --no-silent",
         "build:lib": "ng build form-url-saver-lib --configuration development",
         "watch": "ng build --watch --configuration development",
